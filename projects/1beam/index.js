@@ -72,7 +72,7 @@ const poolTvl = async (chain, poolAddress, block) => {
     ) {
       return;
     }
-    const [symbol, decimals] = getTokenId(token.toLowerCase());
+    const [symbol, decimals] = getTokenId(chain, token.toLowerCase());
     sum[symbol] = new BigNumber(balances.output[i]).div(new BigNumber(10).pow(decimals)).toNumber()
   });
 
@@ -84,7 +84,7 @@ async function calcPool2(masterchef, lpMarket, block, chain) {
   const lpBalance = await sdk.api.abi.call({
     target: lpMarket,
     params: [masterchef],
-    abi: Abis.erc20.balanceOf,
+    abi: 'erc20:balanceOf',
     chain: chain,
     block,
   });
